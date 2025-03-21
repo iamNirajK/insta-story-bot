@@ -1,0 +1,27 @@
+name: Instagram Story Bot Automation
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'   # हर 2 घंटे में ऑटोमेटिक रन होगा
+  workflow_dispatch:  # मैनुअली भी रन कर सकते हैं
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # GitHub का सर्वर इस्तेमाल होगा
+
+    steps:
+      - name: रिपॉज़िटरी क्लोन करें
+        uses: actions/checkout@v4
+
+      - name: Python सेटअप करें
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Dependencies इंस्टॉल करें
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: स्क्रिप्ट रन करें
+        run: python main.py
